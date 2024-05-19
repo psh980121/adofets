@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+    <insert id="insert" parameterType="org.iclass.dto.commentDto">
+        INSERT INTO comments (commentidx, postidx, commentid, commentnick, commentContent, commentDate, commentlike)
+        VALUES (commentidx_seq.nextval, #{postidx}, 0, #{commentnick}, #{commentContent}, sysdate, #{commentlike})
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM 
+        comments 
+        WHERE 
+        commentidx = #{commentidx}
+    </delete>
+
+    <select id="maxOf" resultType="long">
+        SELECT max(commentidx) FROM comments 
+    </select>
+
+    <!-- 댓글 목록 -->
+    <select id="commentsList" parameterType="int" resultType="org.iclass.dto.commentDto">
+    SELECT * FROM comments WHERE postidx=#{postidx}
+</select>
+
+    <!-- 메인글의 댓글 갯수 컬럼을 update -->
+    <update id="setCommentCount" parameterType="int">
+        <!-- 메인글 postidx의 댓글이 몇개인지 comment 테이블에서 count(*) 로 구하고
+             메인글 테이블 post update 합니다. -->
+        UPDATE post
+        SET commentcnt = (
+            SELECT count(*) 
+            FROM comments
+            WHERE postidx=#{postidx}
+        )   
+        WHERE postidx=#{postidx}
+    </update>
+</mapper>

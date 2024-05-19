@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="animal">
+	<insert id="insert" parameterType="org.iclass.dto.Animal">
+	INSERT INTO Animal (desertionNo, filename,happenDt, kind, breed, colorCd,age, weight, processState, sexCd, neuterYn,specialMark,careNm) 
+   VALUES (#{desertionNo},#{filename}, #{happenDt}, #{kind}, #{breed}, #{colorCd}, #{age}, #{weight}, #{processState}, #{sexCd},#{neuterYn},#{specialMark},#{careNm})
+	</insert>
+<select id="selectAll" resultType="org.iclass.dto.Animal">
+    SELECT * FROM Animal
+</select>
+
+<select id="infoAdopt" resultType="org.iclass.dto.AdoptDto">
+    SELECT * FROM Adopt ORDER BY ADOPTIDX
+</select>
+
+<insert id="insertMeeting" parameterType="org.iclass.dto.AdoptDto">
+    INSERT INTO ADOPT (adoptidx, aniid, userid,  adoptdate, filename)
+    VALUES (adopt_idx.nextval,#{aniid},#{userid},#{adoptdate},#{filename})
+</insert>
+</mapper>
+ 
+ 
+ 
+ 
+ 
+ 

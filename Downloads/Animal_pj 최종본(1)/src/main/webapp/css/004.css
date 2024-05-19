@@ -1,0 +1,146 @@
+/* 몇몇 기본 스타일을 초기화합니다. */
+body {
+   font-family: Arial, sans-serif;
+   margin: 0;
+   padding: 0;
+}
+
+/* 셀렉트 박스 컨테이너를 스타일링합니다. */
+.selectbox {
+   position: relative;
+   width: 200px;
+   margin: 20px;
+}
+
+/* 화면에서 숨길 요소에 "hidden" 클래스를 적용합니다. */
+.hidden {
+   display: none;
+}
+
+/* 토글 버튼을 스타일링합니다. */
+.toggle-btn {
+   background-color: #f1f1f1;
+   border: 1px solid #ccc;
+   padding: 10px;
+   width: 100%;
+   cursor: pointer;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+/* 아래 화살표 아이콘을 스타일링합니다. */
+.ico-down {
+   width: 12px;
+   height: 12px;
+   transition: transform 0.3s ease;
+}
+
+/* 셀렉트 박스가 열렸을 때 아이콘을 회전시킵니다. */
+.selectbox.open .ico-down {
+   transform: rotate(180deg);
+}
+
+/* 옵션 목록을 스타일링합니다. */
+.selectbox-option {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   border: 1px solid #ccc;
+   position: absolute;
+   top: 100%;
+   left: 0;
+   right: 0;
+   background-color: #fff;
+   display: none;
+}
+
+/* 셀렉트 박스가 열렸을 때 옵션 목록을 표시합니다. */
+.selectbox.open .selectbox-option {
+   display: block;
+}
+
+/* 옵션 버튼을 스타일링합니다. */
+.option-btn {
+   background-color: #fff;
+   border: none;
+   padding: 10px;
+   width: 100%;
+   text-align: left;
+   cursor: pointer;
+}
+
+/* 옵션 버튼에 마우스 호버 효과를 추가합니다. */
+.option-btn:hover {
+   background-color: #f1f1f1;
+   border-radius: 12px;
+   height: 40px;
+   width: 192px;
+   display: inline;
+   margin: 3px;
+}
+
+/* 카트 */
+.balloon {
+   position: relative;
+   background: beige;
+   border-radius: 10px;
+}
+
+.balloon::after {
+   border-top: 0px solid transparent;
+   border-left: 10px solid transparent;
+   border-right: 10px solid transparent;
+   border-bottom: 10px solid beige;
+   content: "";
+   position: absolute;
+   top: -10px;
+   left: 458px;
+}
+
+.position-fixed {
+   background-color: transparent;
+   border: none;
+}
+
+/* 스크롤 가능한 스타일을 설정합니다. */
+.toggle-box {
+   display: none;
+   overflow-y: auto; /* 세로 스크롤을 추가합니다. */
+   max-height: 450px; /* 최대 높이를 설정합니다. */
+}
+
+/* 내용의 크기에 따라 스크롤이 나타나도록 설정합니다. */
+.toggle-box>span {
+   display: inline-block;
+}
+
+/* 스크롤바의 디자인을 지정합니다. */
+.toggle-box::-webkit-scrollbar {
+  width: 12px; /* 스크롤바의 너비를 설정합니다. */
+}
+
+/* 스크롤바의 track (배경) 스타일을 지정합니다. */
+.toggle-box::-webkit-scrollbar-track {
+  background: #f1f1f1; /* 배경 색상을 지정합니다. */
+}
+
+/* 스크롤바의 thumb (스크롤바의 이동 부분) 스타일을 지정합니다. */
+.toggle-box::-webkit-scrollbar-thumb {
+  background: rosybrown; /* 스크롤바의 색상을 지정합니다. */
+  border-radius: 6px; /* 스크롤바의 모서리를 둥글게 만듭니다. */
+}
+
+/* 스크롤바의 thumb가 마우스 호버 시 스타일을 지정합니다. */
+.toggle-box::-webkit-scrollbar-thumb:hover {
+  background: #555; /* 호버 시 배경 색상을 변경합니다. */
+}
+
+
+
+
+
+
+
+
+

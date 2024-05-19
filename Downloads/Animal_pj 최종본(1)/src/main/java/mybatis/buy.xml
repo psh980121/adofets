@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="Buy">
+    <select id="selectBuyByUSERID" parameterType="String" resultType="org.iclass.dto.buyDto">
+    SELECT * FROM BUY WHERE userid = #{userid}
+</select>
+    
+    <insert id="insertBuy" parameterType="org.iclass.dto.buyDto">
+        INSERT INTO BUY (buyidx, pdtcode, userid, buycnt)
+        VALUES     
+        (BUY_SEQ.nextval , #{pdtcode}, #{userid}, #{buycnt})              
+    </insert>
+     
+</mapper>

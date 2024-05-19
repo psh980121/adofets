@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="question">
+	<insert id="insert" parameterType="org.iclass.dto.QuestionDto">
+		INSERT INTO question
+		(qsid,qscategory,qstitle,userid,qsdate,qsprocess,asdate,ascontent,qscontent,picture)
+		VALUES
+		(comment_QSID_seq.nextval,#{qscategory},#{qstitle},#{userid},sysdate,#{qsprocess},null,null,#{qscontent},
+		<choose>
+			<when test="picture == null">
+				null
+			</when>
+			<otherwise>
+				#{picture}
+			</otherwise>
+		</choose>
+		)
+	</insert>
+
+	<update id="update" parameterType="org.iclass.dto.QuestionDto">
+		UPDATE question
+		SET
+		qsprocess =
+		#{qsprocess},
+		asDate = sysdate,
+		ascontent = #{ascontent}
+		WHERE
+		qsid =
+		#{qsid}
+	</update>
+
+	<select id="selectAll" resultType="org.iclass.dto.QuestionDto">
+		SELECT * FROM question ORDER
+		BY QSDATE
+	</select>
+
+	<select id="selectProcessAd"
+		resultType="org.iclass.dto.QuestionDto" parameterType="String">
+		SELECT * FROM
+		question
+		WHERE qsprocess = #{qsprocess} ORDER BY QSDATE
+	</select>
+
+
+	<!-- 나의 문의내역 -->
+	<select id="selectAllByID"
+		resultType="org.iclass.dto.QuestionDto" parameterType="String">
+		SELECT * FROM
+		question WHERE userid = #{userid}
+	</select>
+
+	<select id="selectByQsId"
+		resultType="org.iclass.dto.QuestionDto" parameterType="int">
+		SELECT * FROM
+		question WHERE qsid = #{qsid} 
+	</select>
+	
+	<select parameterType="java.util.Map" id="selectProcess"
+		resultType="org.iclass.dto.QuestionDto">SELECT * FROM question WHERE qsprocess = #{qsprocess} and
+		userid=#{userid} </select>
+
+ 	
+ 	<!-- 페이지네이션(페이지 설정) 을 위한 select -->
+ 	<select id="pagelist" resultType="org.iclass.dto.QuestionDto" parameterType="java.util.Map">
+ 		SELECT * FROM 
+			(SELECT rownum r ,f.* FROM
+								(SELECT * FROM question  ORDER BY qsdate DESC) f)
+		WHERE r BETWEEN #{start} AND 
+		#{end}
+ 	</select>
+ 	
+ 	<!-- 페이지네이션(페이지 설정) 을 위한 select -->
+ 	<select id="processList" resultType="org.iclass.dto.QuestionDto" parameterType="java.util.Map">
+ 		SELECT * FROM 
+			(SELECT rownum r ,f.* FROM
+					(SELECT * FROM question  
+						WHERE userid = #{userid} 
+						<if test="qsprocess != null and !qsprocess.equals('all')">
+      					AND qsprocess = #{qsprocess}
+						</if>
+					ORDER BY userid DESC) f)
+		WHERE r BETWEEN #{start} AND #{end}
+ 	</select>
+ 	<select id="count" resultType="int" parameterType="java.util.Map">
+ 		SELECT count(*) FROM question
+ 				WHERE userid = #{userid} 
+				<if test="qsprocess != null and !qsprocess.equals('all')">
+	   					AND qsprocess = #{qsprocess}
+				</if>
+ 	</select>
+
+</mapper>
+ 	

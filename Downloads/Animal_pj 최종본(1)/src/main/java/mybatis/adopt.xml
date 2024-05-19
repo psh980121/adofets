@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="Adopt">
+
+    <select id="selectAdoptByUSERID" parameterType="String" resultType="org.iclass.dto.AdoptDto">
+    SELECT * FROM ADOPT WHERE USERID = #{USERID}
+</select>
+
+    <insert id="insertAdopt" parameterType="org.iclass.dto.AdoptDto">
+        INSERT INTO ADOPT (adoptidx, aniid, userid, adoptdate, aniadopt)
+        VALUES (#{adoptIdx}, #{aniId}, #{userId}, #{adoptDate}, #{aniAdopt})
+    </insert>
+    
+     <select id="selectAdoptByAdoptIdx" parameterType="int" resultType="org.iclass.dto.AdoptDto">
+        SELECT * FROM ADOPT WHERE ADOPTIDX = #{adoptIdx}
+    </select>
+</mapper>

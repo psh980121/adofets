@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="users">
+
+	<!-- 회원가입 -->
+	<insert id="insert" parameterType="org.iclass.dto.usersDto">
+		INSERT INTO
+		USERS
+		VALUES
+		(#{userid},#{usercate},#{userpass},#{username},#{usernick},#{userage},
+		#{usercity},#{useremail},#{userphone},sysdate)
+	</insert>
+
+	<!-- 로그인 -->
+	<select id="login" parameterType="java.util.Map"
+		resultType="org.iclass.dto.usersDto">
+		select *
+		from
+		users
+		where userid=#{userid} and userpass = #{userpass}
+	</select>
+
+	<!-- 아이디 중복검사 -->
+	<select id="selectusersId" resultType="int"
+		parameterType="String">
+		SELECT COUNT(*) FROM USERS
+		WHERE userid = #{userid}
+	</select>
+
+	<!-- 닉네임 중복검사 -->
+	<select id="selectusersNick" resultType="int"
+		parameterType="String">
+		SELECT COUNT(*) FROM USERS
+		WHERE usernick = #{usernick}
+	</select>
+	
+	<!-- 회원탈퇴시 비밀번호 중복검사 -->
+	<select id="selectusersPass" resultType="int"
+		parameterType="String">
+		SELECT COUNT(*) FROM USERS
+		WHERE userpass = #{userpass}
+	</select>
+
+	<!-- 회원탈퇴 -->
+	<delete id="deleteUserById"
+		parameterType="String">
+		DELETE FROM users WHERE USERID = #{userid}
+	</delete>
+	
+	<!-- 회원정보 업데이트 -->
+	<update id="updateUser" parameterType="org.iclass.dto.usersDto">
+        UPDATE users
+        SET 
+            userpass = #{userpass},
+            username = #{username},
+            usernick = #{usernick},
+            userage = #{userage},
+            usercity = #{usercity},
+            useremail = #{useremail},
+            userphone = #{userphone}
+        WHERE userid = #{userid}
+    </update>
+   
+    <!-- 사용자 정보를 불러오기위함 -->
+    <select id="selectUserByUSERID" parameterType="String" resultType="org.iclass.dto.usersDto">
+        SELECT * FROM users WHERE userid = #{userid}
+    </select>
+    
+   <!-- 사용자 전화번호 -->
+    <select id="selectuserPhone" parameterType="String" resultType="String">
+        SELECT userphone FROM users WHERE userid = #{userid}
+    </select>
+    
+   <insert id="sendMessage" parameterType="org.iclass.dto.Message">
+    INSERT INTO MESSAGE (userid, aniid, message)
+    VALUES (#{userid},#{aniid},#{message})
+  </insert>
+  
+  <!-- 전체 메세지 확인 -->
+    <select id="checkMessage"  parameterType="String" resultType="org.iclass.dto.Message">
+        SELECT * FROM message WHERE userid = #{userid}
+    </select>
+    
+    <!--메세지 카운트 -->
+     <select id="countMessage" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM message WHERE userid = #{userid}
+    </select>
+
+  <delete id="deleteAdopt" parameterType="int">
+ 	DELETE FROM ADOPT
+	WHERE adoptidx = #{adoptidx}
+ </delete> 
+    
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+
+    <!-- 메인글 목록 가져오기 - 할일 : 한번에(즉 한페이지에) 글 10개씩 가져오도록 변경해야 합니다. -->
+    <select id="list" resultType="org.iclass.dto.postDto" parameterType="java.util.Map">
+     SELECT * FROM (
+        SELECT rownum rnum, postidx, usernick, postitle, postcontent, postcate, postpic, posttime, viewcnt
+        FROM (
+            SELECT * FROM POST
+            ORDER BY postidx DESC
+        )
+    ) WHERE rnum BETWEEN #{start} AND #{end}
+    </select>
+
+    <!-- 페이지네이션(페이지 설정) 을 위한 select -->
+    <select id="pagelist" resultType="org.iclass.dto.postDto" parameterType="java.util.Map">
+        SELECT * FROM
+        (SELECT rownum r ,f.* FROM
+            (SELECT * FROM POST  ORDER BY postidx DESC) f)
+        WHERE r BETWEEN #{start} AND #{end}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT count(*) FROM POST
+    </select>
+
+    <!-- PK로 글 조회(글 읽기) -->
+    <select id="selectByIdx" parameterType="long" resultType="org.iclass.dto.postDto">
+        SELECT *
+        FROM
+        POST
+        WHERE
+        postidx=#{postidx}
+    </select>
+
+    <!-- 글 조회수 증가 -->
+    <update id="setReadCount" parameterType="long">
+        UPDATE POST
+        SET
+        viewcnt = viewcnt +1
+        WHERE
+        postidx = #{postidx}
+    </update>
+
+    <update id="update" parameterType="org.iclass.dto.postDto">
+        UPDATE POST
+        SET
+        POSTITLE=#{postitle}, POSTCONTENT=#{postcontent} 
+        WHERE
+        POSTIDX=#{postidx}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM
+        POST
+        WHERE
+        POSTIDX = #{postidx}
+    </delete>
+
+    <insert id="insert" parameterType="org.iclass.dto.postDto">
+    INSERT INTO POST (POSTIDX, USERNICK, POSTCONTENT, POSTTIME, LIKECNT, VIEWCNT, POSTCATE, POSTITLE, COMMENTCNT, POSTPIC)
+    VALUES (postidx_seq.nextval, #{usernick}, 
+            #{postcontent}, 
+            sysdate, 
+            #{likecnt}, 
+            #{viewcnt}, 
+            #{postcate}, 
+            #{postitle}, 
+            #{commentcnt},
+            #{postpic})
+</insert>
+
+	<!-- 카테고리별 글 목록 조회 -->
+<select id="pagelistByCategory" resultType="org.iclass.dto.postDto" parameterType="java.util.Map">
+
+    SELECT * FROM (
+        SELECT rownum rnum, postidx, usernick, postitle, postcontent, postcate, postpic, posttime, viewcnt
+        FROM (
+            SELECT * FROM POST
+            WHERE (postcate = #{category})
+            ORDER BY postidx DESC
+        )
+    ) WHERE rnum BETWEEN #{start} AND #{end}
+
+</select>
+
+<!-- 카테고리별 글 개수 조회 -->
+<select id="countByCategory" resultType="int" parameterType="string">
+    SELECT COUNT(*) FROM POST
+    WHERE postcate = #{category}
+
+</select>
+	
+
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="shelter">
+ 	
+	<!-- 회원가입 -->
+	<insert id="insert" parameterType="org.iclass.dto.shelterDto">
+		INSERT INTO 
+		SHELTER
+		VALUES
+		(#{shelterid},#{sheltercity},#{sheltername},#{sheltermax},#{shelterem},#{sheltercontent},#{sheltertel})
+	</insert>
+ </mapper>

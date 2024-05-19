@@ -1,0 +1,108 @@
+/* 본문 스타일 */
+body {
+  padding-top: 3rem;
+  padding-bottom: 0px;
+  color: rgb(var(--bs-tertiary-color-rgb)); /* 보조 색상에 따라 글자색 지정 */
+}
+
+/* 캐러셀 커스터마이징 */
+.carousel {
+  margin-bottom: 4rem;
+}
+.carousel-caption {
+  bottom: 3rem;
+  z-index: 10;
+}
+.carousel-item {
+  height: 32rem;
+}
+
+/* 마케팅 콘텐츠 정렬 */
+.marketing .col-lg-4 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.marketing .col-lg-4 p {
+  margin-right: 0.75rem;
+  margin-left: 0.75rem;
+}
+
+/* 피처렛 디바이더 */
+.featurette-divider {
+  margin: 5rem 0; /* 부트스트랩 <hr> 간격 조절 */
+}
+.featurette-heading {
+  letter-spacing: -0.05rem; /* 헤딩 간격 조절 */
+}
+
+/* 반응형 CSS */
+@media (min-width: 40em) {
+  /* 캐러셀 컨텐츠 크기 확장 */
+  .carousel-caption p {
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
+
+@media (min-width: 62em) {
+  /* 피처렛 헤딩 상단 여백 추가 */
+  .featurette-heading {
+    margin-top: 7rem;
+  }
+}
+
+@media (min-width: 768px) {
+  /* 큰 화면에서 이미지 자리 표시자 크기 확대 */
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+/* 이미지 자리 표시자 스타일 */
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+/* ======================================================== */
+
+/* 글자크기를 16px 맑은 고딕 굵게하고 width넓이 700, 높이 50만큼 배경색은 #ccc, 글자색은 검정색, 라인높이50px
+menu박스 가운데정렬, 글자가운데 정렬 */
+#menu {
+  font: bold 16px "malgun gothic";
+  width: 700px;
+  height: 50px;
+  color: black;
+  line-height: 50px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* menu태그 자식의 ul의 자식 li를 왼쪽정렬과 넓이 140설정 */
+#menu > ul > li {
+  float: left;
+  width: 140px;
+  position: relative;
+}
+#menu > ul > li > ul {
+  width: 130px;
+  display: none;
+  position: absolute;
+  font-size: 14px;
+  background: lightcyan;
+}
+#menu > ul > li:hover > ul {
+  display: block;
+}
+#menu > ul > li > ul > li:hover {
+  background: orange;
+  border: 1px solid white;
+  transition: ease 1s;
+}

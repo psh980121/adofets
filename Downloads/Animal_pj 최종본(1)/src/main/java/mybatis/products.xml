@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="products">
+ 
+	<insert id="insert" parameterType="org.iclass.dto.ProductDto">
+		INSERT INTO product
+		(pdtcode,pdtcate,pdtprice,pdtdate,pdtcontent,pdtname,usernick,userid,pdttype,pdtpicture)
+		VALUES
+		(product_seq.nextval,#{pdtcate},#{pdtprice},sysdate,#{pdtcontent},#{pdtname},#{usernick},#{userid},#{pdttype},#{pdtpicture})
+	</insert>
+
+	<select id="getProducts" resultType="org.iclass.dto.ProductDto">
+		select *
+		from product
+	</select>
+	
+	<select id="getByPdtcode" parameterType="int"
+		resultType="org.iclass.dto.ProductDto">
+		<!-- pdtname 값은 중복없이 입력 -->
+		select *
+		from product
+		where pdtcode = #{pdtcode}
+	</select>
+	
+
+	<select id="getByPdtcate" parameterType="String"
+		resultType="org.iclass.dto.ProductDto">
+		select *
+		from product
+		where pdtcate like '%' || #{pdtcate} || '%'
+	</select>
+
+	<select id="getByPdttype" parameterType="String"
+		resultType="org.iclass.dto.ProductDto">
+		select *
+		from product
+		where pdttype = #{pdttype}
+	</select>
+
+	<select id="getCart" parameterType="int" resultType="org.iclass.dto.buyCartDto">
+		SELECT PDTPICTURE, PDTNAME, PDTPRICE FROM PRODUCT
+ 		WHERE PDTCODE = #{pdtcode}
+	</select>
+	
+	<update id="update" parameterType="org.iclass.dto.ProductDto">
+		UPDATE PRODUCT
+		SET
+		pdtname = #{pdtname},
+		pdtprice = #{pdtprice},
+		pdtcate = #{pdtcate},
+		pdtcontent = #{pdtcontent}
+		where pdtcode = #{pdtcode}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM PRODUCT WHERE pdtcode = #{pdtcode}
+	</delete>
+	
+	<select id="selectSales" resultType="org.iclass.dto.productsSalesDto">
+		SELECT p.PDTCODE, p.PDTNAME, p.PDTPRICE, counts, total  FROM PRODUCT p JOIN 
+	(
+	SELECT b.PDTCODE, COUNT(*) AS counts, SUM(p.pdtprice) AS total FROM BUY b JOIN PRODUCT p 
+	ON b.PDTCODE = p.PDTCODE 
+	GROUP BY b.PDTCODE
+	) a
+	ON p.PDTCODE = a.PDTCODE
+	ORDER BY PDTCODE 
+	</select>
+</mapper>
+
+<!-- 
+	private int pdtcode; 		//상품코드
+	private String pdtcate; 	//상품카테고리
+	private int pdtprice; 		//상품가격
+	private Date pdtdate; 		//등록날짜
+	private String pdtcontent; 	//상품설명
+	private String pdtname; 	//상품이름
+	private String usernick; 	//판매자닉네임
+	private String userid;		//판매자ID
+	private String pdttype; 	//상품타입
+	private String pdtpicture;	//상품사진
+ -->
+
+
