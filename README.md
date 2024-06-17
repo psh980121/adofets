@@ -36,7 +36,7 @@ Adofet은 1인 가구가 늘어 남에 따라 그에 따른 반려동물�
 >나의 문의 내역을 볼수있는 페이지 상태여부에 따라 전체, 처리중, 처리완료 등으로 나누어 클릭시 상태여부에 맞는 문의내용만을 보여줄수있습니다.
 
 <details>
-<summary>AssistantApi 작업 코드</summary>
+<summary>나의 문의 내역</summary>
 <div markdown="1">
 
 ```java
